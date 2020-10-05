@@ -13,12 +13,14 @@
     - [Importing](#importing)
     - [Code in render()](#code-in-render)
   - [Components Interacting](#components-interacting)
+    - [props](#props)
     - [this.props](#thisprops)
     - [default.props](#defaultprops)
     - [Constructor](#constructor)
-    - [State](#state)
+    - [this.setState()](#thissetstate)
   - [Lifecycle Methods](#lifecycle-methods)
   - [Hooks](#hooks)
+- [Conclusion](#conclusion)
 
 ## Préambule
 
@@ -260,11 +262,23 @@ class Integer extends React.Component {
 
 ### Components Interacting
 
+#### props
+
+Les components peuvent passer des informations à d'autre components. On passe l'information via un attribut, on appel ça un `props`.
+
+Dans l'exemple ci-dessous `SpaceShip`est un component et `ride`est un props.
+
+```JSX
+<SpaceShip ride="Millennium Falcon" />
+```
+
+[:arrow_up: Revenir au top](#reactjs)
+
 #### this.props
 
 Un component peut accéder à ses props avec `this.props.x`. Dans l'exemble en dessous on peut voir dans le rendu de notre composant que l'on souhaite saluer le `first name` qui sera passé en props au composant `Hello`.
 
-```JSXX
+```JSX
 class Hello extends React.Component {
   render() {
     return <h1>Hi there, {this.props.firstName}!</h1>;
@@ -274,15 +288,15 @@ class Hello extends React.Component {
 ReactDOM.render(<Hello firstName="Kim" />, document.getElementById('app'));
 ```
 
+[:arrow_up: Revenir au top](#reactjs)
+
 #### default.props
 
-defaultProps
+Si un component n'a pas de `props`qui lui est passé alors on peut définir une valeur de secours pour que notre application continue d'avoir du sens, évite de planter ou tout simplement s'affiche correctement.
 
-A React component’s defaultProps object contains default values to be used in case props are not passed. If a prop is not passed to a component, then it will be replaced with the value in the defaultProps object.
+Dans l'exemple ci-dessous, on peut remarquer que on définit une image par défault pour que si le component `Profile`n'a pas de `props` `profilePictureSrc`il en ajoute une par défaut.
 
-In the example code, defaultProps is set so that profiles have a fallback profile picture if none is set. The <MyFriends> component should render two profiles: one with a set profile picture and one with the fallback profile picture.
-
-```JSXX
+```JSX
 class Profile extends React.Component {
   render() {
     return (
@@ -314,17 +328,63 @@ class MyFriends extends React.Component {
 }
 ```
 
-----
-
-:exclamation: La suite du cours est encore en travaux.
-
-![wip](https://www.avee.no/wp-content/uploads/2018/07/work-in-progress-1.jpg)
-
+[:arrow_up: Revenir au top](#reactjs)
 
 #### Constructor
 
-#### State
+Le `constructor` permet d'établir un état par défaut pour les props d'un component via `this.state`.
+
+```jsx
+constructor(props) {
+  super(props);
+  this.state = { counter: 0 };
+}
+```
+
+#### this.setState()
+
+Les components peuvent changer leur état (state) avec `this.setState()`. Cette méthode doit être utiliser à la place de `this.state`.
+
+Dans l'exemple ci-dessous, on peut voir que `this.setState()`est utilisé pour changer le goût préféré de chocolat à vanille.
+
+```jsx
+class Flavor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      favorite: 'chocolate',
+    };
+  }
+
+  render() {
+    return (
+      <button
+        onClick={(event) => {
+          event.preventDefault();
+          this.setState({ favorite: 'vanilla' });
+        }}
+      >
+        No, my favorite is vanilla
+      </button>
+    );
+  }
+}
+```
 
 ### Lifecycle Methods
 
+Le cycle de vie d'une application React est juste un moyen de définir son comportement à différent moment. Par exemple imaginons qu'on veut créer une application qui montre un minuteur. On va définir son état lorsque le minuteur est configuré et s'affiche, il s'agira de l'état `componentDidMount()`. On veut ensuite que le compteur que l'utilisateur soit remis à zéro une fois le compteur terminé, du coup on va utiliser l'état `componentWillUnmount()`. 
+
+Le lifecycle c'est un peu complexe comme matière à appréhender sans exemple concret, je ne peux que vous recommander d'allez lire [:book: la documentation](https://fr.reactjs.org/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class) pour vous faire une meilleure idée de ce qui est possible.
+
 ### Hooks
+
+![cpt-hook](https://media.giphy.com/media/9p8hgZoQjj9y8/giphy.gif)
+
+Alors vous avez déjà surement entendu parler de `hook` (pas le capitaine) en vous promenant dans la doc de React. Ceux-ci sont un concept nouveau introduit il y a peu dans React. Ils ferront l'objet d'un cours d'introduction prochainement. Il est tout a fait possible d'utiliser React sans hooks pour commencer.
+
+## Conclusion
+
+Il a énormément de chose à dire sur React, évidement c'est un framework ultra-complet qui propulse de milliers d'apps à travers le monde. Il est donc impossible de tout voir en quelques heures. Il va falloir mettre les mains sur le clavier et les yeux dans la doc pour perfectionner votre apprentissage de React. Alors au boulot, moussaillon! (j'ai fais une blague de pirate, parce que j'ai parlé du capitaine crochet plus haut... C'est drôle, non?)
+
+![doit](https://media.giphy.com/media/J7jsbfcJ2O5eo/giphy.gif)
