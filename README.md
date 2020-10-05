@@ -13,9 +13,9 @@ Hola, tellement de choses à voir ces prochaines semaines
 ### Front-end
 
 - [React](developpeurs/react.md)
-- React-router (wip)
-- React-bootstrap (wip)
-- Axios (wip)
+- [React-router](developpeurs/react-router.md)
+- [React-bootstrap](developpeurs/react-bootstrap.md)
+- [Axios](developpeurs/axios.md)
 
 ### Projets
 
