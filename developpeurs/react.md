@@ -10,8 +10,11 @@
   - [Import React](#import-react)
   - [React Components](#react-components)
     - [JSX Capitalization](#jsx-capitalization)
+    - [Importing](#importing)
+    - [Code in render()](#code-in-render)
   - [Components Interacting](#components-interacting)
-    - [Props](#props)
+    - [this.props](#thisprops)
+    - [default.props](#defaultprops)
     - [Constructor](#constructor)
     - [State](#state)
   - [Lifecycle Methods](#lifecycle-methods)
@@ -70,7 +73,7 @@ Ceci est une balise HTML tout à fait classique, mais si elle est dans un fichie
 
 Les éléments JSX sont comme les expressions JS, ils peuvent être stockés n'importe où où une expression JS serait stockée, comme dans une variable, passé à une fonction, stocké dans un objet ou un tableau,...
 
-```js
+```JSX
 const navBar = <nav>I am a nav bar</nav>;
 
 const myTeam = {
@@ -84,13 +87,13 @@ const myTeam = {
 
 Il est tout a fait possible de donner des attributs à nos éléments JSX comme en HTML.
 
-```js
+```JSX
 const cat = <img src="img/cat.jpg" alt="cat" width="500px" height="350px" />
 ```
 
 Il est également possible d'utiliser le nesting d'éléments JSX. Notez que si l'élément contient plusieurs lignes alors il faut placer le code entre parenthèses. Le tout peut évidement être enregistré dans une variable.
 
-```js
+```JSX
  const theExample = (
    <a href="https://www.example.com">
      <h1>
@@ -104,7 +107,7 @@ Il est également possible d'utiliser le nesting d'éléments JSX. Notez que si 
 
 Le code suivant ne fonctionnera pas:
 
-```js
+```JSX
 const paragraphs = (
   <p>I am a paragraph.</p> 
   <p>I, too, am a paragraph.</p>
@@ -113,7 +116,7 @@ const paragraphs = (
 
 Tandis que celui-ci fonctionnera à merveille.
 
-```js
+```JSX
 const paragraphs = (
   <div id="i-am-the-outermost-element">
     <p>I am a paragraph.</p>
@@ -134,7 +137,7 @@ Voici néanmoins des liens utiles pour vous aider:
 
 ### ReactDOM et Render()
 
-```js
+```JSX
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -153,7 +156,7 @@ ReactDOM.render(
 
 Il est possible de passer une variable à `render()`
 
-```js
+```JSX
 const myList = {
   js: <li>Julie</li>,
   css: <li>James</li>,
@@ -174,7 +177,7 @@ document.getElementById('app')
 
 Pour pouvoir utiliser React il faut d'abord l'importer dans notre page. Quand on l'importe cela crée un objet qui contient toutes les propriétés dont React à besoin pour fonctionner, y compris pour le JSX et les customs components.
 
-```js
+```JSX
 import React from 'react';
 ```
 
@@ -188,7 +191,7 @@ Il s'agit d'un petit bout de code réutilisable et qui sera en charge d'une seul
 
 Une classe React à besoin d'hériter depuis la classe de base `React.Component` et d'avoir une méthode `render()`. 
 
-```js
+```JSX
 class MyComponent extends React.Component {
   render() {
     return <h1>Hello world!</h1>;
@@ -202,11 +205,114 @@ class MyComponent extends React.Component {
 
 Il est obligatoire que la première lettre de votre composant soit en majuscule. Cela permet à React de faire la distinction entre une balise HTML et un composant.
 
-```js
+```JSX
 <MyComponent/>
 ```
 
 [:arrow_up: Revenir au top](#reactjs)
+
+#### Importing
+
+Il faut évidement importer React pour que votre composant/app fonctionne. Mais il faut également importer vos composants quand vous les séparez dans différents fichiers. Pour ce faire, il suffit de faire appel à l'import en haut de page.
+
+**Button.js**
+
+```JSX
+import React, { Component } from 'react';
+class Button extends Component {
+  render() {
+    // ...
+  }
+}
+export default Button; // Don’t forget to use export default!
+```
+
+**DangerButton.js**
+
+```JSX
+import React, { Component } from 'react';
+import Button from './Button'; // Import a component from another file
+class DangerButton extends Component {
+  render() {
+    return <Button color="red" />;
+  }
+}
+export default DangerButton;
+```
+
+[:arrow_up: Revenir au top](#reactjs)
+
+#### Code in render()
+
+Un component React peut contenir du JS avant que le JSX soit "return".
+
+```JSX
+class Integer extends React.Component {
+  render() {
+    const value = 3.14;
+    const asInteger = Math.round(value);
+    return <p>{asInteger}</p>;
+  }
+}
+```
+
+[:arrow_up: Revenir au top](#reactjs)
+
+### Components Interacting
+
+#### this.props
+
+Un component peut accéder à ses props avec `this.props.x`. Dans l'exemble en dessous on peut voir dans le rendu de notre composant que l'on souhaite saluer le `first name` qui sera passé en props au composant `Hello`.
+
+```JSXX
+class Hello extends React.Component {
+  render() {
+    return <h1>Hi there, {this.props.firstName}!</h1>;
+  }
+}
+
+ReactDOM.render(<Hello firstName="Kim" />, document.getElementById('app'));
+```
+
+#### default.props
+
+defaultProps
+
+A React component’s defaultProps object contains default values to be used in case props are not passed. If a prop is not passed to a component, then it will be replaced with the value in the defaultProps object.
+
+In the example code, defaultProps is set so that profiles have a fallback profile picture if none is set. The <MyFriends> component should render two profiles: one with a set profile picture and one with the fallback profile picture.
+
+```JSXX
+class Profile extends React.Component {
+  render() {
+    return (
+      <div>
+        <img src={this.props.profilePictureSrc} alt="" />
+        <h2>{this.props.name}</h2>
+      </div>
+    );
+  }
+}
+
+Profile.defaultProps = {
+  profilePictureSrc: 'https://example.com/no-profile-picture.jpg',
+};
+
+class MyFriends extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>My friends</h1>
+        <Profile
+          name="Jane Doe"
+          profilePictureSrc="https://example.com/jane-doe.jpg"
+        />
+        <Profile name="John Smith" />
+      </div>
+    );
+  }
+}
+```
 
 ----
 
@@ -214,9 +320,6 @@ Il est obligatoire que la première lettre de votre composant soit en majuscule.
 
 ![wip](https://www.avee.no/wp-content/uploads/2018/07/work-in-progress-1.jpg)
 
-### Components Interacting
-
-#### Props
 
 #### Constructor
 
