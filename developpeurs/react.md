@@ -150,7 +150,7 @@ ReactDOM.render(
 
 `ReactDOM` est une librairie JS qui contient des méthodes liés à React. La plus utile pour le moment est `render()`. On va passer en argument notre JSX pour que `render()` l'affiche sur notre page.
 
-`document.getElementById`devrait vous parraître familier. C'est avec lui qu'on indique à l'intérieur de quel élément HTML on veut afficher notre app React. Il suffit de donner à notre `div`une id `app`dans ce cas-ci.
+`document.getElementById`devrait vous paraître familier. C'est avec lui qu'on indique à l'intérieur de quel élément HTML on veut afficher notre app React. Il suffit de donner à notre `div`une id `app`dans ce cas-ci.
 
 ```html
 <div id="app">C'est ici que s'affichera notre rendu React</div>
@@ -276,7 +276,7 @@ Dans l'exemple ci-dessous `SpaceShip`est un component et `ride`est un props.
 
 #### this.props
 
-Un component peut accéder à ses props avec `this.props.x`. Dans l'exemble en dessous on peut voir dans le rendu de notre composant que l'on souhaite saluer le `first name` qui sera passé en props au composant `Hello`.
+Un component peut accéder à ses props avec `this.props.x`. Dans l'exemple en dessous on peut voir dans le rendu de notre composant que l'on souhaite saluer le `first name` qui sera passé en props au composant `Hello`.
 
 ```JSX
 class Hello extends React.Component {
@@ -381,10 +381,10 @@ Le lifecycle c'est un peu complexe comme matière à appréhender sans exemple c
 
 ![cpt-hook](https://media.giphy.com/media/9p8hgZoQjj9y8/giphy.gif)
 
-Alors vous avez déjà surement entendu parler de `hook` (pas le capitaine) en vous promenant dans la doc de React. Ceux-ci sont un concept nouveau introduit il y a peu dans React. Ils ferront l'objet d'un cours d'introduction prochainement. Il est tout a fait possible d'utiliser React sans hooks pour commencer.
+Alors vous avez déjà sûrement entendu parler de `hook` (pas le capitaine) en vous promenant dans la doc de React. Ceux-ci sont un concept nouveau introduit il y a peu dans React. Ils feront l'objet d'un cours d'introduction prochainement. Il est tout a fait possible d'utiliser React sans hooks pour commencer.
 
 ## Conclusion
 
-Il a énormément de chose à dire sur React, évidement c'est un framework ultra-complet qui propulse de milliers d'apps à travers le monde. Il est donc impossible de tout voir en quelques heures. Il va falloir mettre les mains sur le clavier et les yeux dans la doc pour perfectionner votre apprentissage de React. Alors au boulot, moussaillon! (j'ai fais une blague de pirate, parce que j'ai parlé du capitaine crochet plus haut... C'est drôle, non?)
+Il a énormément de chose à dire sur React, évidement c'est un framework ultra-complet qui propulse de milliers d'apps à travers le monde. Il est donc impossible de tout voir en quelques heures. Il va falloir mettre les mains sur le clavier et les yeux dans la doc (pas comme le capitaine) pour perfectionner votre apprentissage de React. Alors au boulot, moussaillon! (j'ai fais une blague de pirate, parce que j'ai parlé du capitaine crochet plus haut... C'est drôle, non?)
 
 ![doit](https://media.giphy.com/media/J7jsbfcJ2O5eo/giphy.gif)
